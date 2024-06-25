@@ -30,7 +30,7 @@ class Windscribe:
         elif server != None:
             os.system(f"windscribe-cli connect '{server}'")
         else:
-            os.system("windscribe-cli connect")
+            os.system("windscribe-cli connect 'Best'")
     
     def disconnect(self):
         """disconnect from the current server"""
