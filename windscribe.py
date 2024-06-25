@@ -1,13 +1,13 @@
 import os
 import subprocess
-import time
 import random
 
 
 class Windscribe:
     def __init__(self, serverlist, user, password):
         """loads server list and logs into Windscribe"""
-        self.servers = [line.strip() for line in open(serverlist)]
+        with open(serverlist, 'r') as f:
+            self.servers = f.read().splitlines()
         self.login(user,password)
 
     def login(self, user, password):
@@ -20,14 +20,15 @@ class Windscribe:
     def locations(self):
         """prints the locations available to connect to in the shell"""
         os.system("windscribe-cli locations")
+        print(self.servers)
 
     def connect(self, server=None, rand=False):
         """connects to given server, best available server if no server given, or random server"""
         if rand:
             choice = random.choice(self.servers)
-            os.system(f"windscribe-cli connect {choice}")
+            os.system(f"windscribe-cli connect '{choice}'")
         elif server != None:
-            os.system(f"windscribe-cli connect {server}")
+            os.system(f"windscribe-cli connect '{server}'")
         else:
             os.system("windscribe-cli connect")
     
